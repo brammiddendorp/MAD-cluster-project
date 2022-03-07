@@ -25,6 +25,12 @@ sed -i 's/matrix.<your-domain>/matrix.'$DOMAIN'/' ~/matrix-docker-ansible-deploy
 # set server IP
 sed -i "s/<your-server's external IP address>/$MASTER/" ~/matrix-docker-ansible-deploy/inventory/hosts
 
+# EXTRAS
+# Set up Synapse-admin
+tee -a ~/matrix-docker-ansible-deploy/inventory/host_vars/matrix.$DOMAIN/vars.yml > /dev/null << EOF
+matrix_synapse_admin_enabled: true
+EOF
+
 # ACTIVATE
 #install + start
 ansible-playbook -i ~/matrix-docker-ansible-deploy/inventory/hosts ~/matrix-docker-ansible-deploy/setup.yml --tags=setup-all,start
