@@ -36,4 +36,3 @@ EOF
 ansible-playbook -i ~/matrix-docker-ansible-deploy/inventory/hosts ~/matrix-docker-ansible-deploy/setup.yml --tags=setup-all,start
 #register admin
 ansible-playbook -i ~/matrix-docker-ansible-deploy/inventory/hosts ~/matrix-docker-ansible-deploy/setup.yml --extra-vars='username=admin password='$ADMIN_PASS' admin=yes' --tags=register-user
-test
