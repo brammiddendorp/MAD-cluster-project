@@ -3,8 +3,8 @@ MASTER=$1
 DOMAIN=$2
 ADMIN_PASS=$3
 
-# PREPARATION
-sudo yum install -y ansible git pwgen
+sudo dnf install -y ansible git pwgen
+sudo apt install -y ansible git pwgen
 
 # BASIS
 # Get playbook
