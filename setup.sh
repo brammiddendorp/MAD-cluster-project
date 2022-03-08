@@ -2,8 +2,9 @@
 MASTER=$1
 DOMAIN=$2
 ADMIN_PASS=$3
+PACK=$4
 
-sudo dnf install -y git ansible pwgen
+sudo $PACK install -y git ansible pwgen
 
 # BASIS
 # Get playbook
