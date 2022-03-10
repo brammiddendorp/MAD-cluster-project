@@ -30,6 +30,8 @@ sed -i "s/<your-server's external IP address>/$MASTER/" ~/matrix-docker-ansible-
 # Set up Synapse-admin
 tee -a ~/matrix-docker-ansible-deploy/inventory/host_vars/matrix.$DOMAIN/vars.yml > /dev/null << EOF
 matrix_synapse_admin_enabled: true
+# Dark theme
+matrix_client_element_default_theme: 'dark'
 EOF
 
 # ACTIVATE
