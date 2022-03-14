@@ -1,8 +1,10 @@
 #!/bin/bash
-MASTER=$1
-DOMAIN=$2
-ADMIN_PASS=$3
-PACK=$4
+
+PACK=$(zenity --list --title="PACKAGE MANAGER" --text="Choose your package manager" --column="Package manager" --column="Distro" dnf "Fedora" \
+apt "Ubuntu")
+MASTER=$(zenity --entry --title="IP" --text="What is the IP address of your server?")
+DOMAIN=$(zenity --entry --title="DOMAIN" --text="What is your domain?")
+ADMIN_PASS=$(zenity --entry --title="PASSWORD" --text="Please specify an admin password")
 
 sudo $PACK install -y git ansible pwgen
 
