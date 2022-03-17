@@ -47,13 +47,15 @@ ansible-playbook -i ~/matrix-docker-ansible-deploy/inventory/hosts ~/matrix-dock
 ansible-playbook -i ~/matrix-docker-ansible-deploy/inventory/hosts ~/matrix-docker-ansible-deploy/setup.yml --extra-vars='username=admin password='$ADMIN_PASS' admin=yes' --tags=register-user
 
 # SET UP DIMENSION
+#Create Dimension user
+ansible-playbook -i ~/matrix-docker-ansible-deploy/inventory/hosts ~/matrix-docker-ansible-deploy/setup.yml --extra-vars='username=dimension password='$ADMIN_PASS' admin=no' --tags=register-user
 tee -a ~/matrix-docker-ansible-deploy/inventory/host_vars/matrix.$DOMAIN/vars.yml > /dev/null << EOF
 #Dimension
 matrix_dimension_enabled: true
 matrix_dimension_admins:
-  - "@admin:{{ matrix_domain }}"
+  - "@dimension:{{ matrix_domain }}"
 matrix_dimension_access_token: $(curl -X POST --header 'Content-Type: application/json' -d '{
-    "identifier": { "type": "m.id.user", "user": "admin" },
+    "identifier": { "type": "m.id.user", "user": "dimension" },
     "password": "$ADMIN_PASS",
     "type": "m.login.password"
 }' 'https://matrix.$DOMAIN/_matrix/client/r0/login' | grep -oP '(?<="access_token":).*(?=,"home_server")')
