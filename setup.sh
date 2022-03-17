@@ -36,10 +36,6 @@ matrix_synapse_admin_enabled: true
 matrix_client_element_default_theme: 'dark'
 #Custom logo
 matrix_client_element_welcome_logo: "https://raw.githubusercontent.com/130948/MAD-cluster-project/c94b6e62a91afdecf56b68c495bca0577d6f04c0/logo.png"
-#Dimension
-matrix_dimension_enabled: true
-matrix_dimension_admins:
-  - "@admin:{{ matrix_domain }}"
 #OpenID support
 matrix_nginx_proxy_proxy_matrix_client_api_forwarded_location_synapse_oidc_api_enabled: true
 EOF
@@ -49,3 +45,16 @@ EOF
 ansible-playbook -i ~/matrix-docker-ansible-deploy/inventory/hosts ~/matrix-docker-ansible-deploy/setup.yml --tags=setup-all,start
 #register admin
 ansible-playbook -i ~/matrix-docker-ansible-deploy/inventory/hosts ~/matrix-docker-ansible-deploy/setup.yml --extra-vars='username=admin password='$ADMIN_PASS' admin=yes' --tags=register-user
+
+# SET UP DIMENSION
+tee -a ~/matrix-docker-ansible-deploy/inventory/host_vars/matrix.$DOMAIN/vars.yml > /dev/null << EOF
+#Dimension
+matrix_dimension_enabled: true
+matrix_dimension_admins:
+  - "@admin:{{ matrix_domain }}"
+matrix_dimension_access_token: $(curl -X POST --header 'Content-Type: application/json' -d '{
+    "identifier": { "type": "m.id.user", "user": "admin" },
+    "password": "$ADMIN_PASS",
+    "type": "m.login.password"
+}' 'https://matrix.$DOMAIN/_matrix/client/r0/login' | grep -oP '(?<="access_token":).*(?=,"home_server")')
+EOF
