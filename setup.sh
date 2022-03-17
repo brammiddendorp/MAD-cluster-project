@@ -36,6 +36,8 @@ matrix_synapse_admin_enabled: true
 matrix_client_element_default_theme: 'dark'
 #Custom logo
 matrix_client_element_welcome_logo: "https://raw.githubusercontent.com/130948/MAD-cluster-project/c94b6e62a91afdecf56b68c495bca0577d6f04c0/logo.png"
+#Dimension
+matrix_dimension_enabled: true
 #OpenID support
 matrix_nginx_proxy_proxy_matrix_client_api_forwarded_location_synapse_oidc_api_enabled: true
 EOF
